@@ -1,6 +1,8 @@
 import vk_api
 from vk_api.utils import get_random_id
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
+import requests
+import datetime as dt
 
 
 def write_message(sender, message):
@@ -12,18 +14,27 @@ authorize = vk_api.VkApi(token=token)
 longpoll = VkBotLongPoll(authorize, group_id=204293145)
 
 
-# погода
-# рифмы к имени
+def weather_time():
+    moskow_time = dt.datetime.utcnow() + dt.timedelta(hours=3)
+    weather_parameters = {
+        '0': '',
+        'T': '',
+        'format': 2,
+        'M': ''}
 
-def say_hello():
-    return f'Welcome! Ваш ID = {sender}'
+    request_headers = {'Accept-Language': 'ru'}
+    response = requests.get('https://wttr.in/Novomoskovsk', params=weather_parameters, headers=request_headers)
+
+    return 'Текущая дата: {0}\nТочное время: {1}\nПогода сейчас: {2}'\
+        .format(moskow_time.strftime("%d.%m.%Y"), moskow_time.strftime("%H:%M:%S"), response.text)
+
 
 for event in longpoll.listen():
-    if event.type == VkBotEventType.MESSAGE_NEW and event.from_chat and event.message.get('text') !="":
+    if event.type == VkBotEventType.MESSAGE_NEW and event.from_chat and event.message.get('text') != "":
         reseived_message = event.message.get('text')
         sender = event.chat_id
-        if reseived_message == "Привет":
-            write_message(sender, say_hello())
+        if reseived_message == "!погода":
+            write_message(sender, weather_time())
         elif reseived_message == "Пока":
             write_message(sender, "До свидания!")
         else:
