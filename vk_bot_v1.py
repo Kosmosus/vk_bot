@@ -7,7 +7,7 @@ def write_message(sender, message):
     authorize.method('messages.send', {'chat_id': sender, 'message': message, 'random_id': get_random_id()})
 
 
-token = "efc42111e73ecc1d0a1f05e4d182628b74403b15b25eca2c48808b632b85f58dde9f7e4a081531a5dedda"
+token = "7f1964041bd040be8faf14cb84105d8e15fbd66fce3818dea0f9d3266df4b561abb9432810a44826d341f"
 authorize = vk_api.VkApi(token=token)
 longpoll = VkBotLongPoll(authorize, group_id=204249980)
 
