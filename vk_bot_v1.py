@@ -9,7 +9,7 @@ def write_message(sender, message):
 
 token = "7f1964041bd040be8faf14cb84105d8e15fbd66fce3818dea0f9d3266df4b561abb9432810a44826d341f"
 authorize = vk_api.VkApi(token=token)
-longpoll = VkBotLongPoll(authorize, group_id=204249980)
+longpoll = VkBotLongPoll(authorize, group_id=204293145)
 
 
 # погода
